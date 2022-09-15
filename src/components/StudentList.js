@@ -3,31 +3,27 @@ import { Card, Container, Table, ButtonGroup, Button } from "react-bootstrap";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from 'react-router-dom'
 export default function StudentList() {
     const [students, setStudents] = useState([]);
-
     useEffect(() => {
         getStudents();
     }, []);
-
     let getStudents = () => {
         axios
             .get("http://localhost:8080/listStudents")
             .then((response) => setStudents(response.data))
             .catch((error) => alert(error));
     };
-
     let deleteStudent = (studentId) => {
         axios.delete("http://localhost:8080/student/" + studentId)
             .then(response => {
                 if (response.data !== null) {
                     alert("Record Deleted Successfully");
-
+                    setStudents(students.filter(student => student.id !== studentId));
                 }
             })
     }
-
     return (
         <div className="my-3">
             <Container>
@@ -55,16 +51,14 @@ export default function StudentList() {
                                         <td>{student.id}</td>
                                         <td>{student.name}</td>
                                         <td>{student.address}</td>
-
                                         <td>
                                             <ButtonGroup>
                                                 <Button size="sm" variant="outline-primary"><FontAwesomeIcon icon={faEdit}> Edit </FontAwesomeIcon></Button>{' '}
-                                                <Button size="sm" variant="outline-danger"><FontAwesomeIcon icon={faTrash}> Delete </FontAwesomeIcon></Button>
+                                                <Link to={"/student/" + student.id}><Button size="sm" variant="outline-primary"><FontAwesomeIcon icon={faEdit}> Edit </FontAwesomeIcon></Button></Link>{' '}
                                                 <Button size="sm" variant="outline-danger" onClick={deleteStudent.bind(this, student.id)}><FontAwesomeIcon icon={faTrash}> Delete </FontAwesomeIcon></Button>
                                                 {/* <Button size="sm" variant="outline-danger" onClick={()=>deleteStudent(student.id)}><FontAwesomeIcon icon={faTrash}> Delete </FontAwesomeIcon></Button> */}
                                             </ButtonGroup>
                                         </td>
-
                                     </tr>
                                 )
                             )}
