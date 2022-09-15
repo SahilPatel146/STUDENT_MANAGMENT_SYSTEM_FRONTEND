@@ -1,5 +1,4 @@
-import React from 'react'
-import { Container, Table } from 'react-bootstrap'
+import React from "react";
 import { Card, Container, Table } from "react-bootstrap";
 
 export default function StudentList() {
@@ -64,5 +63,5 @@ export default function StudentList() {
                 </Card.Body>
             </Container>
         </div>
-    )
+    );
 }

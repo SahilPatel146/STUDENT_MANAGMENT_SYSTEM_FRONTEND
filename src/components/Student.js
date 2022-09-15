@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Container, Form, Card, Button } from "react-bootstrap";
@@ -6,17 +5,14 @@ import CardHeader from "react-bootstrap/esm/CardHeader";
 
 
 export default function Student() {
-
     const [id, setId] = useState();
     const [name, setName] = useState();
     const [address, setAddress] = useState();
-
     let student = {
         id: id,
         name: name,
         address: address
     }
-
     let textChanged = (event) => {
         if (event.target.name === "id") {
             setId(event.target.value);
@@ -26,7 +22,6 @@ export default function Student() {
             setAddress(event.target.value);
         }
     }
-
     let saveStudent = (event) => {
         event.preventDefault();
         axios.post("http://localhost:8080/student", student)
@@ -37,7 +32,6 @@ export default function Student() {
             })
             .catch(error => alert(error));
     }
-
     return (
         <div className="my-3">
             <Container>
